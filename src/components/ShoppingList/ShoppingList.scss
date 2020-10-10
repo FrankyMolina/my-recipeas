@@ -1,0 +1,17 @@
+@use '../../styles/colors.scss' as Color;
+@use '../../styles/breakpoints.scss' as Breakpoint;
+
+.shoppingList {
+  &__container {
+    background-color: lightcyan;
+  }
+
+  &__productList {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__singleProductDiv {
+    display: flex;
+  }
+}

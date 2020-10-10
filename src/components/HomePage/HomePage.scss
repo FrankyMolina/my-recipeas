@@ -1,0 +1,9 @@
+@use '../../styles/colors.scss' as Color;
+@use '../../styles/breakpoints.scss' as Breakpoint;
+
+.homepage {
+  &__container {
+    padding: 2rem;
+    background-color: lightcoral;
+  }
+}
