@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import './ShoppingList.scss';
 
-const emptyInputState = { newProduct: '', productPrice: '' };
+const emptyInputState = { newProduct: '', productPrice: '', productId: '' };
 
 export default function ShoppingList() {
   const [inputState, setInputState] = useState(emptyInputState);
@@ -21,21 +23,24 @@ export default function ShoppingList() {
   function handleSubmit(ev) {
     ev.preventDefault();
 
-    setShoppingListState(
-      ...[shoppingListState],
-      shoppingListState.push(inputState)
-    );
+    setShoppingListState([
+      ...shoppingListState,
+      { ...inputState, productId: uuidv4() },
+    ]);
 
     setInputState(emptyInputState);
   }
 
-  function removeProduct(item) {
-    const newShoppingList = shoppingListState.filter((e) => e !== item);
-
-    //when you have a duplicate, it removes the two of them. remains to be fixed.
+  function removeProduct(idToRemove) {
+    const newShoppingList = shoppingListState.filter((e) => e.productId !== idToRemove);
 
     setShoppingListState(newShoppingList);
   }
+
+  const listTotalPrice = shoppingListState.reduce(
+    (acc, next) => acc + Number(next.productPrice),
+    0
+  );
 
   const { newProduct, productPrice } = inputState;
 
@@ -71,21 +76,18 @@ export default function ShoppingList() {
       <div className="shoppingList__productsList">
         <h2>LIST</h2>
         <div>
-          {shoppingListState.map((item, idx) => (
-            <div key={idx} className="shoppingList__singleProductDiv">
+          {shoppingListState.map((item) => (
+            <div key={item.productId} className="shoppingList__singleProductDiv">
               <p>{item.newProduct}</p>
               <p>{item.productPrice}</p>
-              <button onClick={() => removeProduct(item)}>X</button>
+              <button onClick={() => removeProduct(item.productId)}>X</button>
             </div>
           ))}
         </div>
 
-        {/* <div>
-          <h3>
-            Total:{' '}
-            {shoppingListState.map((itemPrice, idx) => console.log(itemPrice.productPrice[idx]))}
-          </h3>
-        </div> */}
+        <div>
+          <h3>Total: {Number.isNaN(listTotalPrice) ? ' ' : listTotalPrice}€</h3>
+        </div>
       </div>
     </div>
   );
