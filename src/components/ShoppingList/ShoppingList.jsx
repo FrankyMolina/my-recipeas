@@ -32,7 +32,9 @@ export default function ShoppingList() {
   }
 
   function removeProduct(idToRemove) {
-    const newShoppingList = shoppingListState.filter((e) => e.productId !== idToRemove);
+    const newShoppingList = shoppingListState.filter(
+      (e) => e.productId !== idToRemove
+    );
 
     setShoppingListState(newShoppingList);
   }
@@ -77,7 +79,10 @@ export default function ShoppingList() {
         <h2>LIST</h2>
         <div>
           {shoppingListState.map((item) => (
-            <div key={item.productId} className="shoppingList__singleProductDiv">
+            <div
+              key={item.productId}
+              className="shoppingList__singleProductDiv"
+            >
               <p>{item.newProduct}</p>
               <p>{item.productPrice}</p>
               <button onClick={() => removeProduct(item.productId)}>X</button>
