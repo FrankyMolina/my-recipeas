@@ -6,9 +6,6 @@ import HomePage from './components/HomePage';
 import Login from './components/Login';
 import ShoppingList from './components/ShoppingList';
 
-import './App.scss';
-import './styles/reset.scss';
-
 function App() {
   return (
     <BrowserRouter>

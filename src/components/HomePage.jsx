@@ -1,11 +1,11 @@
 import React from 'react';
 
-import './HomePage.scss';
+import { Flex } from '@chakra-ui/core';
 
 export default function HomePage() {
   return (
-    <div className="homepage__container">
+    <Flex>
       <h1>hello, welcome to home page</h1>
-    </div>
+    </Flex>
   );
 }
