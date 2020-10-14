@@ -19,6 +19,10 @@ export default function Navbar() {
       </Box>
 
       <Flex>
+        <Link as={ReactLink} to="/recipes/new-recipe" pr="0.5rem">
+          new recipe
+        </Link>
+
         <Link as={ReactLink} to="/login" mr="1rem">
           Login
         </Link>

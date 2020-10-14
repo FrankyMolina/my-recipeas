@@ -65,7 +65,7 @@ export default function Login() {
             value={password}
             onChange={handleInputChange}
           />
-          <FormHelperText id="email-helper-text">
+          <FormHelperText id="password-helper-text">
             We'll encrypt it. Don't worry.
           </FormHelperText>
         </FormControl>

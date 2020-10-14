@@ -24,6 +24,7 @@ export default function ShoppingList() {
   const [inputState, setInputState] = useState(emptyInputState);
   const [shoppingListState, setShoppingListState] = useState([]);
 
+  //ITEM AND VALUE INPUT CHANGE AND SUBMIT
   function handleInputChange(ev) {
     const inputName = ev.target.name;
     const value = ev.target.value;
@@ -45,6 +46,7 @@ export default function ShoppingList() {
     setInputState(emptyInputState);
   }
 
+  // REMOVE SINGLE ITEMS AND MULTIPLE ITEMS
   function removeProduct(idToRemove) {
     const newShoppingList = shoppingListState.filter(
       (e) => e.productId !== idToRemove
@@ -57,10 +59,13 @@ export default function ShoppingList() {
     setShoppingListState([]);
   }
 
+  //TOTAL PRICE FUNCTION
   const listTotalPrice = shoppingListState.reduce(
     (acc, next) => acc + Number(next.productPrice),
     0
   );
+
+  // DESTRUCTURING FOR INPUTS
 
   const { newProduct, productPrice } = inputState;
 
@@ -84,7 +89,7 @@ export default function ShoppingList() {
             value={newProduct}
             onChange={handleInputChange}
           />
-          <FormHelperText id="email-helper-text">
+          <FormHelperText id="newProduct-helper-text">
             Add the product name.
           </FormHelperText>
         </FormControl>
@@ -99,7 +104,7 @@ export default function ShoppingList() {
             value={productPrice}
             onChange={handleInputChange}
           />
-          <FormHelperText id="email-helper-text">
+          <FormHelperText id="productPrice-helper-text">
             Add the product price.
           </FormHelperText>
         </FormControl>

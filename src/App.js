@@ -5,6 +5,9 @@ import Layout from './components/Layout';
 import HomePage from './components/HomePage';
 import Login from './components/Login';
 import ShoppingList from './components/ShoppingList';
+import NewRecipe from './components/NewRecipe';
+import RecipesList from './components/RecipesList';
+// import SingleRecipe from './components/NewRecipe';
 
 function App() {
   return (
@@ -21,6 +24,18 @@ function App() {
 
           <Route exact path="/">
             <HomePage />
+          </Route>
+
+          <Route exact path="/recipes/new-recipe">
+            <NewRecipe />
+          </Route>
+
+          {/* <Route exact path="/recipe/XXXXXXX">
+            <SingleRecipe />
+          </Route> */}
+
+          <Route exact path="/recipes">
+            <RecipesList />
           </Route>
         </Switch>
       </Layout>
