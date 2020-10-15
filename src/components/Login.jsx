@@ -28,12 +28,11 @@ export default function Login() {
 
   function handleSubmit(ev) {
     ev.preventDefault();
-    console.log(loginState);
     setLoginState(emptyLoginState);
   }
 
   return (
-    <Flex justify="center" align="center" mt={["1rem", "3rem"]}>
+    <Flex justify="center" align="center" mt={['1rem', '3rem']}>
       <Flex
         as="form"
         onSubmit={handleSubmit}

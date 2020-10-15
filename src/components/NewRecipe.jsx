@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+import { v4 as uuidv4 } from 'uuid';
+import PreviewOfNewRecipe from './PreviewOfNewRecipe';
+
 import {
   Box,
   Button,
@@ -10,19 +13,32 @@ import {
   FormControl,
   FormLabel,
   FormHelperText,
-  Tag,
-  TagIcon,
-  TagLabel,
-  TagCloseButton,
 } from '@chakra-ui/core';
 
-const emptyRecipeState = { recipeName: '', ingredients: [], steps: [] };
+//EMPTY STATES
+const emptyRecipeState = {
+  recipeName: '',
+  ingredients: [],
+  steps: [],
+};
+
+const emptyIngredientsState = {
+  ingredientName: '',
+  ingredientID: '',
+};
+
+const emptyStepsState = {
+  stepID: '',
+  stepDescription: '',
+};
 
 export default function SingleRecipe() {
   const [recipeState, setRecipeState] = useState(emptyRecipeState);
   const [recipeNameState, setRecipeNameState] = useState('');
-  const [ingredientsState, setIngredientsState] = useState([]);
-  const [recipeStepsState, setRecipeStepsState] = useState([]);
+  const [ingredientsState, setIngredientsState] = useState(
+    emptyIngredientsState
+  );
+  const [recipeStepsState, setRecipeStepsState] = useState(emptyStepsState);
 
   // NAME AND IMAGE INPUTCHANGE AND SUBMIT
   function handleRecipeInputChange(ev) {
@@ -47,9 +63,7 @@ export default function SingleRecipe() {
   function handleIngredientsInputChange(ev) {
     const { value } = ev.target;
 
-    setIngredientsState([value]);
-
-    console.log(ingredientsState);
+    setIngredientsState({ ingredientName: value });
   }
 
   function handleIngredientsSubmit(ev) {
@@ -57,12 +71,13 @@ export default function SingleRecipe() {
 
     setRecipeState({
       ...recipeState,
-      ingredients: [...recipeState.ingredients, ingredientsState],
+      ingredients: [
+        ...recipeState.ingredients,
+        { ...ingredientsState, ingredientID: uuidv4() },
+      ],
     });
 
-    setIngredientsState([]);
-
-    console.log(recipeState);
+    setIngredientsState(emptyIngredientsState);
   }
 
   //RECIPE STEPS INPUT CHANGE AND SUBMIT
@@ -70,7 +85,7 @@ export default function SingleRecipe() {
   function handleRecipeStepsInputChange(ev) {
     const { value } = ev.target;
 
-    setRecipeStepsState([value]);
+    setRecipeStepsState({ stepDescription: value });
   }
 
   function handleRecipeStepsSubmit(ev) {
@@ -78,13 +93,18 @@ export default function SingleRecipe() {
 
     setRecipeState({
       ...recipeState,
-      steps: [...recipeState.steps, recipeStepsState],
+      steps: [...recipeState.steps, { ...recipeStepsState, stepID: uuidv4() }],
     });
 
-    setRecipeStepsState([]);
-
-    console.log(recipeState);
+    setRecipeStepsState(emptyStepsState);
   }
+
+  // PREVIEWOFNEWRECIPE PROPS
+
+  const previewProps = {
+    recipeState,
+    setRecipeState,
+  };
 
   return (
     <Flex direction={['column', 'row']}>
@@ -106,6 +126,7 @@ export default function SingleRecipe() {
           direction="column"
           borderBottom="1px dotted"
           pb="1rem"
+          hidden={recipeState.recipeName !== ''}
         >
           <FormControl isRequired>
             <FormLabel htmlFor="recipeName">Recipe name</FormLabel>
@@ -155,11 +176,14 @@ export default function SingleRecipe() {
             <Input
               type="text"
               name="recipeIngredient"
-              value={ingredientsState}
+              value={ingredientsState.ingredientName}
               onChange={handleIngredientsInputChange}
             />
             <FormHelperText id="recipeIngredient-helper-text">
-              One ingredient each time please 😄
+              One ingredient each time please
+              <span role="img" aria-label="smiling emoji">
+                😄
+              </span>
             </FormHelperText>
           </FormControl>
 
@@ -181,7 +205,7 @@ export default function SingleRecipe() {
             <Textarea
               type="text"
               name="recipeSteps"
-              value={recipeStepsState}
+              value={recipeStepsState.stepDescription}
               onChange={handleRecipeStepsInputChange}
             />
             <FormHelperText id="recipeSteps-helper-text">
@@ -190,19 +214,12 @@ export default function SingleRecipe() {
           </FormControl>
 
           <Button type="submit" variantColor="teal" variant="outline">
-            Add step
+            Add step!
           </Button>
         </Flex>
       </Flex>
 
-      <Flex
-        direction="column"
-        border="1px solid"
-        borderRadius="5px"
-        p="1rem"
-        flexBasis={['100%', '50%']}
-        m="0.5rem"
-      ></Flex>
+      <PreviewOfNewRecipe fullRecipeProps={previewProps} />
     </Flex>
   );
 }
